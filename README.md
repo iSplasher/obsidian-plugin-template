@@ -1,4 +1,4 @@
-# MarkPlace
+# Template
 
 This is a sample plugin for Obsidian (https://obsidian.md).
 
