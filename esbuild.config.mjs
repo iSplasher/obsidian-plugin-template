@@ -70,6 +70,9 @@ const context = await esbuild.context({
 	sourcemap: prod ? false : "inline",
 	treeShaking: true,
 	outfile: "main.js",
+	define: {
+		"process.env.NODE_ENV": prod ? '"production"' : '"development"',
+	},
 	plugins: [
 		sassPlugin({
 			filter: /\.scss$/,
@@ -77,6 +80,8 @@ const context = await esbuild.context({
 		renamePlugin("./main.css", "./styles.css"),
 	],
 });
+
+console.log("Building..." + (prod ? " (production)" : " (development)"));
 
 if (prod) {
 	await context.rebuild({});

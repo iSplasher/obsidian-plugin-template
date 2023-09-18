@@ -1,26 +1,24 @@
-import ErrorModal from "src/components/modals/error";
-import {
-	formatNoticeMessage,
-	MarkPlaceErrorNotice,
-} from "src/components/notice";
-import { constant } from "src/constants";
 import { CustomError } from "ts-custom-error";
+
+import ErrorModal from "@/components/modals/error";
+import { formatNoticeMessage, PluginErrorNotice } from "@/components/notice";
+import { constant } from "@/constants";
 
 import logger from "./logger";
 
-export class MarkPlaceConsoleError extends CustomError {
+export class PluginConsoleError extends CustomError {
 	constructor(...messages: string[]) {
 		super(messages.join(" "));
 	}
 }
 
-export class AppNotDefinedError extends MarkPlaceConsoleError {
+export class AppNotDefinedError extends PluginConsoleError {
 	constructor() {
 		super("App is not defined");
 	}
 }
 
-export class MarkPlaceError extends MarkPlaceConsoleError {
+export class PluginError extends PluginConsoleError {
 	brief: string;
 	details: string;
 	consoleMsg: string;
@@ -43,7 +41,7 @@ export class MarkPlaceError extends MarkPlaceConsoleError {
 		if (constant.settings?.showError === "modal") {
 			new ErrorModal(this).open();
 		} else if (constant.settings?.showError === "notice") {
-			new MarkPlaceErrorNotice(this);
+			new PluginErrorNotice(this);
 		} else {
 			logger.error(this);
 		}

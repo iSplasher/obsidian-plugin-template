@@ -1,13 +1,14 @@
 import cx from "classnames";
 import { Modal } from "obsidian";
-import { CLASSES, constant } from "src/constants";
-import { AppNotDefinedError, MarkPlaceError } from "src/utils/error";
-import logger from "src/utils/logger";
+
+import { CLASSES, constant } from "@/constants";
+import { AppNotDefinedError, PluginError } from "@/utils/error";
+import logger from "@/utils/logger";
 
 export default class ErrorModal extends Modal {
-	error: MarkPlaceError;
+	error: PluginError;
 
-	constructor(error: MarkPlaceError) {
+	constructor(error: PluginError) {
 		if (!constant.app) throw new AppNotDefinedError();
 		super(constant.app);
 
@@ -23,7 +24,7 @@ export default class ErrorModal extends Modal {
 		logger.error(this.error);
 
 		contentDiv.createEl("h2", {
-			text: `MarkPlace Error: ${this.error.name}`,
+			text: `Plugin Name Error: ${this.error.name}`,
 		});
 		contentDiv.createEl("h3", { text: this.error.brief });
 
